@@ -21,6 +21,10 @@ public class LengthSumVisitor implements EVisitor {
         return totalLength;
     }
 
+    public void setTotalLength(int totalLength) {
+        this.totalLength = totalLength;
+    }
+
 
 
 }

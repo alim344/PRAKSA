@@ -9,6 +9,7 @@ import com.example.praksa.Service;
 import java.sql.SQLException;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.Scanner;
 
 @SpringBootApplication
 public class PraksaApplication {
@@ -20,7 +21,14 @@ public class PraksaApplication {
 		Service service = new Service();
 		service.LoadData();
 
-		int length = service.GetLength(7);
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Enter an id of a broken conductor: ");
+		int number = 0;
+		if (scanner.hasNextInt()) { // Check if the next input is an int
+			 number = scanner.nextInt();
+		}
+
+		int length = service.GetLength(number);
 		System.out.println("Udaljenost kvara od trafostanice je: " + length	+ "m");
     }
 
