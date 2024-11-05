@@ -19,6 +19,13 @@ public class Conductor extends ConductingEquipment{
 
     @Override
     public boolean isBreaker() {
-        return super.isBreaker();
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Conductor{" +
+                "length=" + length +
+                '}';
     }
 }

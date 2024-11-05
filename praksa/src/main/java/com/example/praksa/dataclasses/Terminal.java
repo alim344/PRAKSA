@@ -21,4 +21,13 @@ public class Terminal {
     }
 
     public Terminal(){}
+
+    @Override
+    public String toString() {
+        return "Terminal{" +
+                "id=" + id +
+                ", conductingEquipment=" + conductingEquipment +
+                ", connectivityNode=" + connectivityNode +
+                '}';
+    }
 }

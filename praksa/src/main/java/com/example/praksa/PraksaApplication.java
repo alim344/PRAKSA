@@ -19,7 +19,7 @@ public class PraksaApplication {
 		SpringApplication.run(PraksaApplication.class, args);
 		Service service = new Service();
 		service.LoadData();
-		int duyina = service.GetLength(7);
+		int duyina = service.GetLength(11);
 		System.out.println(duyina);
     }
 

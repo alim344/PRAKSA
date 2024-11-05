@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.util.List;
 
-public class  ConductingEquipment {
+public abstract class  ConductingEquipment {
 
     public int id;
     @Setter
@@ -18,8 +18,12 @@ public class  ConductingEquipment {
 
     public ConductingEquipment(){}
 
-    public  boolean  isBreaker(){
-        return false;
-    }
+    public abstract boolean  isBreaker();
 
+    @Override
+    public String toString() {
+        String s =  "ConductingEquipment{" +
+                "id=" + id;
+                return s;
+    }
 }

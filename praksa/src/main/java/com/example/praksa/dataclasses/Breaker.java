@@ -15,4 +15,6 @@ public class Breaker extends ConductingEquipment{
     public boolean isBreaker() {
         return true;
     }
+
+
 }

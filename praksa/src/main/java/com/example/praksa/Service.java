@@ -1,6 +1,7 @@
 package com.example.praksa;
 
 import com.example.praksa.dataclasses.*;
+import org.antlr.v4.runtime.atn.SemanticContext;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -40,72 +41,81 @@ public class Service {
 
 
         List<Conductor> path_conductors =  FindPath(id);
-        int total_lenght = 0;
-
+        int length = 0;
         for(Conductor conductor : path_conductors){
-            total_lenght += conductor.getLength();
+             length += conductor.length;
         }
 
-
-        return total_lenght;
+        return length;
     }
 
-    private List<Conductor> FindPath(int id) {
+
+    private List<Conductor> FindPath(int id){
 
         Queue<Terminal> queue = new LinkedList<>();
         Set<Terminal> visited = new HashSet<>();
         List<Conductor> path = new ArrayList<>();
 
-        Conductor broken_conductor = (Conductor) builder.dictionaries.conductingEquipmentDictionary.get(id);
 
+        ConductingEquipment broken_conductor = (Conductor) builder.dictionaries.conductingEquipmentDictionary.get(id);
 
-
-        if(broken_conductor == null){
-            return null;
+        Terminal broken_terminal = broken_conductor.terminals.get(0);
+        visited.add(broken_terminal);
+        ConnectivityNode first_node = broken_terminal.connectivityNode;
+        Terminal min = broken_terminal;
+        for(Terminal t: first_node.terminals){
+            if(t.id < min.id){
+                min = t;
+            }
         }
 
-       Terminal broken_terminal = broken_conductor.getTerminals().get(0);
+
+        queue.add(min);
 
 
-        queue.add(broken_terminal);
-        visited.add(broken_terminal);
-
-        while (!queue.isEmpty()) {
+        while(!queue.isEmpty()){
 
             Terminal current_terminal = queue.poll();
-            ConductingEquipment current_equipment = current_terminal.getConductingEquipment();
+
+            ConductingEquipment current_equipment = current_terminal.conductingEquipment;
 
             if(current_equipment.isBreaker()){
                 return path;
             }
 
-            ConnectivityNode current_node = current_terminal.getConnectivityNode();
+            path.add((Conductor) current_equipment);
 
-            List<Terminal> next_terminals = current_node.getTerminals();
+            Terminal second_terminal = new Terminal();
 
-            for(Terminal terminal: next_terminals){
-                if(!visited.contains(terminal) && !path.contains(terminal)){
-                    queue.add(terminal);
-
-                    Conductor next_conductor =(Conductor) terminal.getConductingEquipment();
-                    if(next_conductor instanceof Conductor){
-                        path.add(next_conductor);
-                    }
+            for(Terminal term: current_equipment.terminals){
+                if(term != current_terminal){
+                    second_terminal = term;
                 }
             }
 
+            ConnectivityNode second_node = second_terminal.connectivityNode;
 
+            List<Terminal> terminals = second_node.terminals;
+
+
+            Terminal min_terminal = terminals.isEmpty() ? null : terminals.get(0);
+
+            for(Terminal t: terminals){
+                // Ensure min_terminal is initialized before comparing
+                if(min_terminal == null || t.id < min_terminal.id) {
+                    min_terminal = t; // Update to the terminal with the smaller ID
+                }
+            }
+
+            queue.add(min_terminal);
+            if(!visited.contains(second_terminal)){
+                visited.add(second_terminal);
+            }
 
         }
 
-
-        return Collections.emptyList();
-
+        return Collections.EMPTY_LIST;
     }
-
-
-
-
 
 
 
