@@ -1,6 +1,7 @@
 package com.example.praksa;
 
 import com.example.praksa.dataclasses.*;
+import com.example.praksa.visitorpattern.LengthSumVisitor;
 import org.antlr.v4.runtime.atn.SemanticContext;
 
 import java.sql.Connection;
@@ -39,22 +40,29 @@ public class Service {
 
     public int GetLength(int id){
 
-
-        List<Conductor> path_conductors =  FindPath(id);
-        int length = 0;
-        for(Conductor conductor : path_conductors){
-             length += conductor.length;
+        LengthSumVisitor visitor = new LengthSumVisitor();
+        int num = FindPath(id, visitor);
+        if(num == 0){
+            return 0;
         }
+        return visitor.getTotalLength();
 
-        return length;
+//        List<Conductor> path_conductors =  FindPath(id, visitor);
+//        int length = 0;
+//        for(Conductor conductor : path_conductors){
+//             length += conductor.length;
+//        }
+//
+//        return length;
     }
 
 
-    private List<Conductor> FindPath(int id){
+    private int FindPath(int id, LengthSumVisitor visitor){
+
 
         Queue<Terminal> queue = new LinkedList<>();
         Set<Terminal> visited = new HashSet<>();
-        List<Conductor> path = new ArrayList<>();
+       // List<Conductor> path = new ArrayList<>();
 
 
         ConductingEquipment broken_conductor = (Conductor) builder.dictionaries.conductingEquipmentDictionary.get(id);
@@ -80,10 +88,12 @@ public class Service {
             ConductingEquipment current_equipment = current_terminal.conductingEquipment;
 
             if(current_equipment.isBreaker()){
-                return path;
+                current_equipment.accept(visitor);
+                return 1;
             }
 
-            path.add((Conductor) current_equipment);
+            //path.add((Conductor) current_equipment);
+           current_equipment.accept(visitor);
 
             Terminal second_terminal = new Terminal();
 
@@ -114,7 +124,7 @@ public class Service {
 
         }
 
-        return Collections.EMPTY_LIST;
+        return 0;
     }
 
 

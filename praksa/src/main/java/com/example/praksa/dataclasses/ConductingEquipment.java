@@ -1,5 +1,6 @@
 package com.example.praksa.dataclasses;
 
+import com.example.praksa.visitorpattern.EVisitor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ public abstract class  ConductingEquipment {
     public ConductingEquipment(){}
 
     public abstract boolean  isBreaker();
+    public abstract void accept(EVisitor visitor);
 
     @Override
     public String toString() {

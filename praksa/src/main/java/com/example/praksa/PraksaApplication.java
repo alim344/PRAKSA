@@ -19,8 +19,9 @@ public class PraksaApplication {
 		SpringApplication.run(PraksaApplication.class, args);
 		Service service = new Service();
 		service.LoadData();
-		int duyina = service.GetLength(11);
-		System.out.println(duyina);
+
+		int length = service.GetLength(7);
+		System.out.println("Udaljenost kvara od trafostanice je: " + length	+ "m");
     }
 
 }
