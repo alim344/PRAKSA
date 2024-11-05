@@ -4,9 +4,15 @@ import java.util.List;
 
 public class Breaker extends ConductingEquipment{
 
-    public Breaker(List<Terminal> terminals){
+    public Breaker(int id, List<Terminal> terminals){
         super(terminals);
+        super.id = id;
     }
 
     public Breaker(){}
+
+    @Override
+    public boolean isBreaker() {
+        return true;
+    }
 }

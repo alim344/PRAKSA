@@ -4,6 +4,7 @@ import com.example.praksa.dataclasses.ConnectivityNode;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.example.praksa.Builder;
+import com.example.praksa.Service;
 
 import java.sql.SQLException;
 import java.util.Dictionary;
@@ -16,8 +17,10 @@ public class PraksaApplication {
 
 	public static void main(String[] args) throws SQLException {
 		SpringApplication.run(PraksaApplication.class, args);
-		Builder b = new Builder();
-		b.build();
+		Service service = new Service();
+		service.LoadData();
+		int duyina = service.GetLength(7);
+		System.out.println(duyina);
     }
 
 }

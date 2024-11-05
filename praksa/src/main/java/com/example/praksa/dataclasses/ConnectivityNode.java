@@ -13,8 +13,8 @@ public class ConnectivityNode {
     @Setter
     public List<Terminal> terminals;
 
-    public ConnectivityNode( List<Terminal> terminals) {
-
+    public ConnectivityNode(int id, List<Terminal> terminals) {
+        this.id = id;
         this.terminals = terminals;
     }
 

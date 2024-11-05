@@ -1,13 +1,11 @@
 package com.example.praksa.dataclasses;
 
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
-public class ConductingEquipment {
+public class  ConductingEquipment {
 
     public int id;
     @Setter
@@ -20,5 +18,8 @@ public class ConductingEquipment {
 
     public ConductingEquipment(){}
 
+    public  boolean  isBreaker(){
+        return false;
+    }
 
 }

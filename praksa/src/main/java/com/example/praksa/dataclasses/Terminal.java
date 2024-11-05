@@ -14,8 +14,8 @@ public class Terminal {
     @Setter
     public ConnectivityNode connectivityNode;
 
-    public Terminal( ConductingEquipment conductingEquipment, ConnectivityNode connectivityNode) {
-
+    public Terminal(int id, ConductingEquipment conductingEquipment, ConnectivityNode connectivityNode) {
+        this.id = id;
         this.conductingEquipment = conductingEquipment;
         this.connectivityNode = connectivityNode;
     }
